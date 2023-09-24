@@ -7,7 +7,7 @@ dotenv.config();
 const mongoURI = process.env.MONGO_URI;
 
 const app: Application = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 if (!mongoURI) {
     console.error('MongoDB URI is not defined in environment variables.');

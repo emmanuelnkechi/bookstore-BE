@@ -4,7 +4,7 @@ import {isDateValid} from '../utils/index'
 interface IBook extends Document {
     title: string;
     author: string;
-    quanty: number;
+    quantity: number;
     type: string;
     publicationYear: string;
 }
