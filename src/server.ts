@@ -2,12 +2,18 @@ import express, { Application } from 'express';
 import mongoose, { ConnectOptions } from 'mongoose'; // Import ConnectOptions
 import bookRoutes from './routes/bookRoutes';
 import dotenv from 'dotenv';
+import cors from 'cors'
+
+
 
 dotenv.config();
 const mongoURI = process.env.MONGO_URI;
 
 const app: Application = express();
 const port = process.env.PORT || 8080;
+
+// Configure CORS
+app.use(cors());
 
 if (!mongoURI) {
     console.error('MongoDB URI is not defined in environment variables.');
