@@ -4,11 +4,36 @@ import BookModel from "../models/Book"
 import { validateBook } from '../middlesware/validationMiddleware';
 import { validationResult } from 'express-validator';
 
+interface QueryParams {
+  title?: string; // Optional title parameter
+  orderBy?: 'asc' | 'desc'; // Optional orderBy parameter with specific values
+}
 
 //get all books
 export const getAllBooks = async (req: Request, res: Response) => {
   try {
-    const books = await Book.find();
+    const queryParams: QueryParams = req.query;
+    let query: { title?: { $regex: string; $options: string } } = {};
+
+      // Check if the "title" query parameter is provided
+      if (queryParams.title) {
+        query.title = { $regex: queryParams.title, $options: 'i' }; // Case-insensitive title search
+      }
+
+      let sort: { [key: string]: 1 | -1 } = {};
+
+
+    // Check if the "orderBy" query parameter is provided
+    if (queryParams.orderBy) {
+      if (queryParams.orderBy === 'asc') {
+        sort.title = 1; // Sort in ascending order by title
+      } else if (queryParams.orderBy === 'desc') {
+        sort.title = -1; // Sort in descending order by title
+      }
+    }
+
+    const books = await Book.find(query).sort(sort);
+
 
     if (!books || books.length === 0) {
       return res.status(404).json({
