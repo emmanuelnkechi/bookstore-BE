@@ -3,6 +3,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN yarn install
 COPY . .
-CMD ["node", "src/server.js"]
+CMD ["node", "dist/server.js"] 
 
 EXPOSE 3000
