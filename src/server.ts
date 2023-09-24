@@ -13,7 +13,7 @@ const app: Application = express();
 const port = process.env.PORT || 8080;
 
 // Configure CORS
-app.use(cors());
+app.use(cors({ origin: '*' }));
 
 if (!mongoURI) {
     console.error('MongoDB URI is not defined in environment variables.');
