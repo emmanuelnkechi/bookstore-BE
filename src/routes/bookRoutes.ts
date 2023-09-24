@@ -1,13 +1,14 @@
 // routes/bookRoutes.ts
 import express, { Router } from 'express';
-import {getAllBooks, postNewBook} from '../controllers/bookControllers';
+import {getAllBooks, postNewBook, getBookById} from '../controllers/bookControllers';
 import { validateBook } from '../middlesware/validationMiddleware';
 
 const router: Router = express.Router();
 
 // Define routes
-router.get('books', getAllBooks);
-router.post('books', validateBook, postNewBook)
+router.get('/books', getAllBooks);
+router.get('/books/:id', getBookById);
+router.post('/books', validateBook, postNewBook)
 
 
 
