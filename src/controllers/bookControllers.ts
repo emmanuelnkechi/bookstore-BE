@@ -186,3 +186,37 @@ export const editBookById = async (req: Request, res: Response) => {
     });
   }
 };
+
+// delete a book by id
+export const deleteBookById = async (req: Request, res: Response) => {
+  try {
+    const bookId = req.params.id; 
+
+    // Find the book by ID and delete it
+    const deletedBook = await BookModel.findByIdAndDelete(bookId);
+
+    if (!deletedBook) {
+      return res.status(404).json({
+        success: false,
+        status: 404,
+        message: 'Book not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      status: 200,
+      message: 'Book deleted successfully',
+      data: deletedBook,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      status: 500,
+      message: 'Internal Server Error',
+      error: error.message,
+    });
+  }
+};
+
